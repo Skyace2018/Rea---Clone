@@ -1,0 +1,26 @@
+name: MSFS Aircraft Scanner
+
+on:
+  push:
+    paths:
+      - 'scripts/msfs-aircraft-scan.mjs'
+      - 'scripts/tests/msfs-aircraft-scan.test.mjs'
+      - '.github/workflows/msfs-aircraft-scanner.yml'
+  pull_request:
+    paths:
+      - 'scripts/msfs-aircraft-scan.mjs'
+      - 'scripts/tests/msfs-aircraft-scan.test.mjs'
+      - '.github/workflows/msfs-aircraft-scanner.yml'
+
+jobs:
+  scanner-test:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22.19.0'
+      - name: Run read-only scanner tests
+        run: node --test scripts/tests/msfs-aircraft-scan.test.mjs
